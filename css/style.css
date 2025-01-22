@@ -8,14 +8,14 @@ h1 {
 }
 #game-board {
     display: grid;
-    grid-template-columns: repeat(3, 200px);
+    grid-template-columns: repeat(4, 200px);
     grid-gap: 10px;
     justify-content: center;
     margin: 20px auto;
 }
 .card {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background-color: #f1f1f1;
     border: 2px solid #ccc;
     border-radius: 10px;
