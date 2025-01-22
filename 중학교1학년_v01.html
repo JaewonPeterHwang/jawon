@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중학교 1학년</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 200px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+        .card {
+            width: 200px;
+            height: 200px;
+            background-color: #f1f1f1;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            perspective: 600px;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.6s;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        .card-front {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .card-back {
+            background-color: #f1f1f1;
+            transform: rotateY(180deg);
+        }
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>중학교 1학년</h1>
+    <p>카드를 클릭하여 중학교 1학년 친구의 같은 짝을 맞춰보세요!</p>
+    <div id="game-board"></div>
+    <button id="restart-btn" onclick="restartGame()">다시 시작</button>
+
+    <script>
+        // 그림 파일 경로와 카드 번호 생성
+        const cardsArray = [
+            '메모리게임/김동욱.jpg',
+            '메모리게임/김하율.jpg',
+            '메모리게임/김한유.jpg',
+            '메모리게임/민현우.jpg',
+            '메모리게임/박세윤.jpg',
+            '메모리게임/이기재.jpg',
+            '메모리게임/최서후.jpg',
+        ];
+        let gameBoard = document.getElementById('game-board');
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function createBoard() {
+            const doubledArray = shuffle([...cardsArray, ...cardsArray]);
+            gameBoard.innerHTML = '';
+            matchedPairs = 0;
+
+            doubledArray.forEach((item, index) => {
+                let card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.index = index;
+                card.dataset.value = item;
+
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">${index + 1}</div>
+                        <div class="card-back">
+                            <img src="${item}" alt="Card Image">
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', flipCard);
+                gameBoard.appendChild(card);
+                cards.push(card);
+            });
+        }
+
+        function flipCard(event) {
+            let card = event.target.closest('.card');
+            if (card.classList.contains('flipped') || flippedCards.length === 2) return;
+
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            let [firstCard, secondCard] = flippedCards;
+
+            if (firstCard.dataset.value === secondCard.dataset.value) {
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                matchedPairs++;
+
+                if (matchedPairs === cardsArray.length) {
+                    setTimeout(() => alert('축하합니다! 중학교 1학년 친구의 모든 짝을 맞추었습니다!'), 500);
+                }
+            } else {
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                }, 1000);
+            }
+
+            flippedCards = [];
+        }
+
+        function restartGame() {
+            flippedCards = [];
+            cards = [];
+            createBoard();
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
