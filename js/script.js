@@ -1,11 +1,11 @@
 const cardsArray = [
-    'images/student1.jpg',
-    'images/student2.jpg',
-    'images/student3.jpg',
-    'images/student4.jpg',
-    'images/student5.jpg',
-    'images/student6.jpg',
-    'images/student7.jpg',
+    'image/student1.jpg',
+    'image/student2.jpg',
+    'image/student3.jpg',
+    'image/student4.jpg',
+    'image/student5.jpg',
+    'image/student6.jpg',
+    'image/student7.jpg',
 ];
 
 let gameBoard = document.getElementById('game-board');
