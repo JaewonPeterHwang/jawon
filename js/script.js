@@ -6,6 +6,14 @@ const cardsArray = [
     'image/student5.jpg',
     'image/student6.jpg',
     'image/student7.jpg',
+    'image/student8.jpg',
+    'image/student9.jpg',
+    'image/student10.jpg',
+    'image/student11.jpg',
+    'image/student12.jpg',
+    'image/student13.jpg',
+    'image/student14.jpg',
+    'image/student15.jpg',
 ];
 
 let gameBoard = document.getElementById('game-board');
